@@ -1,4 +1,5 @@
 ﻿using API.Logger.DataStorage;
+using API.Logger.MIddlewares;
 using MongoDB.Driver;
 
 namespace API.Logger.Settings
@@ -9,7 +10,7 @@ namespace API.Logger.Settings
         public static void AddAppSettings(this IServiceCollection services)
         {
             var appSettings = new AppSettings(
-                mongoDbUrl: Environment.GetEnvironmentVariable("MONGODB_URL") ?? ""
+                mongoDbUrl: Environment.GetEnvironmentVariable("MONGODB_URL") ?? "mongodb://localhost:27017"
             );
 
             services.AddSingleton(appSettings);
@@ -18,6 +19,11 @@ namespace API.Logger.Settings
         public static void AddDbClients(this IServiceCollection services)
         {
             services.AddSingleton<MongoDbContext>();
+        }
+
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<ErrorHeandlingMiddelware>();
         }
     }
 }

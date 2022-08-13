@@ -1,5 +1,6 @@
 ﻿using API.Logger.DataStorage;
 using API.Logger.Entities;
+using API.Logger.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -31,8 +32,9 @@ namespace API.Logger.Controllers.Messages
         }
 
         [HttpGet]
-        public GetMessageResponse GetMessages([FromBody] GetMessageRequest request)
+        public GetMessageResponse GetMessages()
         {
+            throw new NotFoundException("Not found");
             var messages = _dbContext.GetMessageCollection().Find(m => true)
                 .ToList()
                 .Select(m => new MessageDto

@@ -1,3 +1,4 @@
+using API.Logger.MIddlewares;
 using API.Logger.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAppSettings();
 builder.Services.AddDbClients();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
@@ -21,8 +23,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
+app.UseMiddleware<ErrorHeandlingMiddelware>();
+app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
