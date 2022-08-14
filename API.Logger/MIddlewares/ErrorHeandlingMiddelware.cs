@@ -4,7 +4,8 @@ namespace API.Logger.MIddlewares
 {
     public class ErrorResponse
     {
-        public string Message { get; set; }
+        public string Title { get; set; } = "";
+        public string Message { get; set; } = "";
         public int Code { get; set; }
     }
 
@@ -22,8 +23,18 @@ namespace API.Logger.MIddlewares
 
                 await context.Response.WriteAsJsonAsync(new ErrorResponse()
                 {
+                    Title = ex.Title,
                     Message = ex.Message,
                     Code = ex.Code,
+                });
+            }
+            catch (Exception ex)
+            {
+                await context.Response.WriteAsJsonAsync(new ErrorResponse()
+                {
+                    Title = "Something went wrong.",
+                    Message = ex.Message,
+                    Code = 500,
                 });
             }
         }

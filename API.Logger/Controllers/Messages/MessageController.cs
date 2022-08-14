@@ -21,7 +21,7 @@ namespace API.Logger.Controllers.Messages
         [HttpPost]
         public ActionResult AddMessage([FromBody] NewMessageDto newMessageDto)
         {
-            Message message = new Message()
+            Message message = new()
             {
                 Description = newMessageDto.Description,
                 Title = newMessageDto.Title,
@@ -32,18 +32,21 @@ namespace API.Logger.Controllers.Messages
         }
 
         [HttpGet]
-        public GetMessageResponse GetMessages()
+        public ActionResult<GetMessageResponse> GetMessages()
         {
-            throw new NotFoundException("Not found");
             var messages = _dbContext.GetMessageCollection().Find(m => true)
                 .ToList()
                 .Select(m => new MessageDto
                 {
                     Description = m.Description,
                     Title = m.Title,
-                });
+                }).ToList();
 
-            return new GetMessageResponse() { Messages = messages };
+            return new GetMessageResponse()
+            {
+                Messages = messages,
+                Count = messages.Count
+            };
         }
     }
 }

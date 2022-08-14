@@ -21,7 +21,7 @@ namespace API.Logger.Settings
             services.AddSingleton<MongoDbContext>();
         }
 
-        public static void AddServices(this IServiceCollection services)
+        public static void AddCustomMiddlewares(this IServiceCollection services)
         {
             services.AddScoped<ErrorHeandlingMiddelware>();
         }

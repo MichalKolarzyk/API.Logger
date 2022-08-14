@@ -1,5 +1,4 @@
-using API.Logger.MIddlewares;
-using API.Logger.Settings;
+using ApiLoggerLib;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddAppSettings();
-builder.Services.AddDbClients();
-builder.Services.AddCustomMiddlewares();
+builder.Services.AddLogging(builder => builder.AddApiLoggerLib("https://localhost:5001"));
 
 var app = builder.Build();
 
@@ -23,9 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-app.UseMiddleware<ErrorHeandlingMiddelware>();
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
 
 app.MapControllers();
