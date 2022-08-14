@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddLogging(builder => builder.AddApiLoggerLib("https://localhost:5001"));
+builder.Services.AddLogging(builder => builder.AddApiLoggerLib("http://localhost:8080"));
 
 var app = builder.Build();
 

@@ -20,3 +20,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "API.Logger.dll"]
+
+#docker build -t api_logger -f Api.Logger/Dockerfile .
+#docker run -d -e MONGODB_URL=mongodb://host.docker.internal:27017 -p 8080:80 --name api_logger_app api_logger
