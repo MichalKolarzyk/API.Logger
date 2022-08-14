@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAppSettings();
 builder.Services.AddDbClients();
 builder.Services.AddCustomMiddlewares();
+builder.Services.AddCorsPolicy();
 
 var app = builder.Build();
 
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ErrorHeandlingMiddelware>();
 app.UseHttpsRedirection();
+app.UseCors(Constans.CustomCorsPolicy.AllowAll);
+
 app.UseAuthorization();
 
 app.MapControllers();

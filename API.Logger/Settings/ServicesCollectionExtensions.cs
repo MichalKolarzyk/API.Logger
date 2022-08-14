@@ -25,5 +25,17 @@ namespace API.Logger.Settings
         {
             services.AddScoped<ErrorHeandlingMiddelware>();
         }
+
+        public static void AddCorsPolicy(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(Constans.CustomCorsPolicy.AllowAll, policy =>
+                {
+                    policy.AllowAnyOrigin();
+                    policy.AllowAnyMethod();
+                });
+            });
+        }
     }
 }
